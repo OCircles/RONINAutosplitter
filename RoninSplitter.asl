@@ -16,6 +16,7 @@ state("Ronin", "v9")
 
 
 startup {
+	vars.doubletap = 0;
 	vars.bikeVar = 0;
 }
 
@@ -47,5 +48,14 @@ isLoading {
 }
 
 split {
-	if ( old.bike != vars.bikeVar && current.bike == vars.bikeVar ) return true;
+	if ( vars.doubletap == 0) {
+		if ( old.bike != vars.bikeVar && current.bike == vars.bikeVar ) {
+			vars.doubletap = 500;
+			return true;
+		}
+	}
+}
+
+update {
+	if ( vars.doubletap != 0 ) vars.doubletap -= 1;
 }
